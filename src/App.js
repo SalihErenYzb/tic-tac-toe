@@ -1,31 +1,42 @@
 import './App.css'; 
 import { useState } from "react";
 import Board from "./Board.js"
+import { Bot,EasyBot,HardBot,MiddleBot } from './Bot.js';
 
 export default function App(){
   const [inGame,setInGame] = useState(false);
-  const [settings,setSettings] = useState(null);
-  function startGame(settings){
-    setSettings(settings);
+  const [bot,setbot] = useState(null);
+  function startGame(bot){
+    setbot(bot);
     setInGame(true);
   }
   function stopGame(){
     setInGame(false);
-    setSettings(null);
+    setbot(null);
   }
+  const availableBots = [new EasyBot(),new MiddleBot(), new HardBot()];
+
   return (
     <div className='game'>
         {inGame ? (
-          <div>
-            <button className='buttonx' onClick={stopGame}>Go back to menu</button>
-            <Board settings={settings}/>
+          <div className="game-container">
+              <div className="game-controls">
+                <button onClick={stopGame}>Go back to menu</button>
+              </div>
+              <Board bot={bot}/>
           </div>
         ) : (
-          <div>
+          <div className="menu">
             <h1>Welcome to tic-tac-toe</h1>
-            <button className='buttonx' onClick={() => startGame(0)}>Play With Your Friends</button>
-            <button className='buttonx' onClick={() => startGame(1)}>Play Against Easy Bot</button>
-            <button className='buttonx' onClick={() => startGame(2)}>Play Against Hard Bot</button>
+            <button  onClick={() => startGame(null)}>Play With Your Friends</button>
+            {availableBots.map(( bot, id ) => (
+              <button 
+                key={id} 
+                onClick={() => startGame(bot)}
+              >
+                Play Against {bot.name}
+              </button>
+            ))}
           </div>
         )}
     </div>

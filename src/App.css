@@ -1,90 +1,120 @@
-.game {
+/* App.css */
+
+/* Center the entire app and set a consistent layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh; /* Ensure the app takes at least the full viewport height */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Style for the game board container */
+.board-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background-color: #f0f0f0;
-  font-family: Arial, sans-serif;
+  width: 300px; /* Fixed width for the board */
+  margin-bottom: 20px; /* Space below the board for buttons */
 }
 
-h1 {
-  color: #333;
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.buttonx {
-  background-color: #4CAF50;
-  display: block;
-  color: white;
-  padding: 10px 20px;
-  margin: 10px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.buttonx:hover {
-  background-color: #45a049;
-}
-
-.board {
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0;
-}
-
+/* Style for the board rows */
 .board-row {
   display: flex;
 }
 
+/* Style for individual squares */
 .square {
-  width: 80px;
-  height: 80px;
-  background-color: white;
-  border: 2px solid #333;
-  font-size: 2rem;
+  background: #fff;
+  border: 1px solid #999;
+  font-size: 24px;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  line-height: 34px;
+  height: 100px;
+  width: 100px;
+  margin: -1px; /* Overlap borders to avoid double borders */
+  text-align: center;
   cursor: pointer;
-  transition: background-color 0.2s;
 }
 
-.square:hover {
-  background-color: #e0e0e0;
+.square:focus {
+  outline: none;
 }
 
+/* Style for the status message */
 .status {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  font-size: 1.5em;
   font-weight: bold;
 }
 
-.history {
+/* Container for the "go back" buttons */
+.history-buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  max-height: 200px; /* Limit height to prevent excessive growth */
+  overflow-y: auto; /* Add scroll if buttons overflow */
+  margin-top: 10px;
+  width: 300px; /* Match board width */
 }
 
-.button-state {
-  background-color: #2196F3;
+/* Style for individual "go back" buttons */
+.history-buttons button {
+  margin: 5px 0;
+  padding: 10px;
+  width: 100%;
+  max-width: 200px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.history-buttons button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Style for the menu */
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #007bff;
   color: white;
-  padding: 8px 15px;
-  margin: 5px;
   border: none;
   border-radius: 5px;
-  font-size: 0.9rem;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
-.button-state:hover {
-  background-color: #1976D2;
+.menu button:hover {
+  background-color: #0056b3;
+}
+
+/* Ensure buttons in the game view (e.g., "Go back to menu") are styled */
+.game-controls {
+  margin-top: 10px;
+}
+
+.game-controls button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.game-controls button:hover {
+  background-color: #c82333;
 }
