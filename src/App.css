@@ -1,34 +1,90 @@
-/* App.css */
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.buttonx {
+  background-color: #4CAF50;
+  display: block;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttonx:hover {
+  background-color: #45a049;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+
 .board-row {
   display: flex;
 }
 
 .square {
-  width: 60px;
-  height: 60px;
-  font-size: 24px;
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  border: 2px solid #333;
+  font-size: 2rem;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #999;
-  background: #fff;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .square:hover {
-  background: #f0f0f0;
+  background-color: #e0e0e0;
 }
 
 .status {
-  margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
   font-weight: bold;
 }
 
+.history {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
 .button-state {
+  background-color: #2196F3;
+  color: white;
+  padding: 8px 15px;
   margin: 5px;
-  padding: 5px 10px;
-  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-state:hover {
+  background-color: #1976D2;
 }
