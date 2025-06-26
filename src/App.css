@@ -1,120 +1,158 @@
-/* App.css */
-
-/* Center the entire app and set a consistent layout */
-.app-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh; /* Ensure the app takes at least the full viewport height */
-  padding: 20px;
+* {
   box-sizing: border-box;
 }
 
-/* Style for the game board container */
-.board-container {
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: #282c34;
+  color: white;
+  margin: 0;
+  padding: 20px;
+}
+
+/* This top-level class centers its child, be it the menu or the game */
+.game {
+  min-height: calc(100vh - 40px);
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  width: 300px; /* Fixed width for the board */
-  margin-bottom: 20px; /* Space below the board for buttons */
-}
-
-/* Style for the board rows */
-.board-row {
-  display: flex;
-}
-
-/* Style for individual squares */
-.square {
-  background: #fff;
-  border: 1px solid #999;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 100px;
-  width: 100px;
-  margin: -1px; /* Overlap borders to avoid double borders */
-  text-align: center;
-  cursor: pointer;
-}
-
-.square:focus {
-  outline: none;
-}
-
-/* Style for the status message */
-.status {
-  margin-bottom: 10px;
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-/* Container for the "go back" buttons */
-.history-buttons {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  max-height: 200px; /* Limit height to prevent excessive growth */
-  overflow-y: auto; /* Add scroll if buttons overflow */
-  margin-top: 10px;
-  width: 300px; /* Match board width */
 }
 
-/* Style for individual "go back" buttons */
-.history-buttons button {
-  margin: 5px 0;
-  padding: 10px;
-  width: 100%;
-  max-width: 200px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.history-buttons button:hover {
-  background-color: #e0e0e0;
-}
-
-/* Style for the menu */
+/* --- Menu Screen --- */
 .menu {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
-.menu button {
-  padding: 10px 20px;
-  font-size: 1em;
-  background-color: #007bff;
-  color: white;
+.menu h1 {
+  font-size: 2.5rem;
+  color: #61dafb;
+  text-align: center;
+}
+
+/* --- General Button Styles --- */
+button {
+  background-color: #61dafb;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  color: #282c34;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
-.menu button:hover {
-  background-color: #0056b3;
+button:hover {
+  background-color: #4fa8c5;
+  transform: translateY(-2px);
 }
 
-/* Ensure buttons in the game view (e.g., "Go back to menu") are styled */
-.game-controls {
-  margin-top: 10px;
+/* --- In-Game Screen --- */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
-.game-controls button {
-  padding: 10px 20px;
-  font-size: 1em;
-  background-color: #dc3545;
-  color: white;
+.board-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.status {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  /* This prevents the layout from shifting when the status text changes */
+  min-height: 2.5rem; 
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+/* --- The Tic-Tac-Toe Board Grid --- */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 6px;
+  background-color: #666;
+  border: 6px solid #666;
+  border-radius: 6px;
+}
+
+.square {
+  /* Width and height are now controlled by the parent .board grid */
+  background-color: #3b4049;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  border-radius: 4px;
+
+  /* Styling for the 'X' and 'O' text */
+  color: white;
+  font-size: 4rem;
+  font-weight: bold;
+  line-height: 1;
+
+  /* This perfectly centers the 'X' or 'O' in the square */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.game-controls button:hover {
-  background-color: #c82333;
+.square:hover {
+  background-color: #4a505a;
+}
+
+.history-buttons {
+  margin-top: 20px;
+  
+  /* Width is set to match the board's width */
+  width: 312px; 
+  min-height: 150px;
+  max-height: 150px; /* IMPORTANT: This is the fixed height */
+  overflow-y: auto;  /* IMPORTANT: This adds a scrollbar only when needed */
+  
+  /* Styling for the container itself */
+  background-color: #31363F;
+  border: 1px solid #4a505a;
+  border-radius: 8px;
+  padding: 10px;
+
+  /* Layout for the buttons inside */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.button-state {
+  width: 100%;
+  background-color: #4a505a;
+  color: #eee;
+  padding: 8px 12px;
+}
+
+.button-state:hover {
+  background-color: #5f6672;
+  transform: none; /* Override general button hover transform */
+}
+
+/* Custom scrollbar styling */
+.history-buttons::-webkit-scrollbar {
+  width: 8px;
+}
+.history-buttons::-webkit-scrollbar-track {
+  background: #282c34;
+  border-radius: 4px;
+}
+.history-buttons::-webkit-scrollbar-thumb {
+  background-color: #61dafb;
+  border-radius: 4px;
 }

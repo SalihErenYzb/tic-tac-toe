@@ -1,7 +1,7 @@
- import './App.css'; 
+
+import './App.css'; 
 import { useState } from "react";
 import { calculateWinner } from "./utils";
-import { BotRegistry } from './Bot.js';
 
 
 function Square({ value, onSquareClick }) {
@@ -18,6 +18,7 @@ export default function Board({bot}) {
     const [states, setStates] = useState(Array(1).fill(Array(9).fill(null)));
 
     function handleBotMovement(currentSquares, currentTurnX) {
+
         const computerMove = bot.calculateMove(currentSquares, currentTurnX);
         console.log("Computer move:", computerMove);
         
@@ -28,7 +29,8 @@ export default function Board({bot}) {
     }
 
     function handleClick(i) {
-        if (states[states.length-1][i] || calculateWinner(states[states.length-1])) return;
+        console.log("Clicked square:", i);
+        if (states[states.length-1][i] || calculateWinner(states[states.length-1]) || !turnX) return;
         
         const nextSquares = states[states.length-1].slice();
         nextSquares[i] = turnX ? "X" : "O";
@@ -38,7 +40,12 @@ export default function Board({bot}) {
         setTurnX(turnX => !turnX);
         
         if (bot && !calculateWinner(nextSquares)) {
-            handleBotMovement(nextSquares, nextTurnX);
+            // put time out for bot to make a move
+            setTimeout(() => {
+                handleBotMovement(nextSquares, nextTurnX);
+            }, 500); // 500ms delay for bot's move
+
+            // handleBotMovement(nextSquares, nextTurnX);
         }
     }
 
@@ -46,27 +53,34 @@ export default function Board({bot}) {
         const newSquares = states.slice(0,i+1);
         setStates(newSquares);
         setTurnX((i+1)%2);
+        if (bot && i%2) {
+            // make a timeout for 
+            setTimeout(() => {
+                handleBotMovement(newSquares[newSquares.length-1], (i+1)%2);
+            }, 500); // 500ms delay for bot's move
+        }
     }
+    console.log("Current states:", states);
     const winner = calculateWinner(states[states.length-1]);
     const status = winner ? "Winner: " + winner: "Next player: " + (turnX ? "X" : "O");
     const lastState = states[states.length-1];
     return (
         <div className='board-container'>
-        <div className='status'>{status}</div>
-        <div className='board'>
-            {Array(3).fill(0).map((_,j) => (
-                <div className="board-row">
-                {Array(3).fill(0).map((_, i) => (
-                    <Square key={3*j+i} value={lastState[3*j+i]} onSquareClick={() => handleClick(3*j+i)} />
+            <div className='status'>{status}</div>
+            <div className='board'>
+                {/* This maps directly to a grid instead of using row divs */}
+                {lastState.map((value, i) => (
+                    <Square key={i} value={value} onSquareClick={() => handleClick(i)} />
                 ))}
-                </div>
-            ))}
-        </div>
-        <div className='history-buttons'>
-            {states.map((_,i) => (
-                <button className='button-state' onClick={() => goBack(i)}>go back to {i}</button>
-            ))}
-        </div>
+            </div>
+            <div className='history-buttons'>
+                {states.map((_, i) => (
+                    // Using i as key is fine here since the list only grows
+                    <button key={i} className='button-state' onClick={() => goBack(i)}>
+                        {i === 0 ? "Go to game start" : `Go to move #${i}`}
+                    </button>
+                ))}
+            </div>
         </div>
     );
 }
