@@ -25,10 +25,8 @@ export default function Board({settings}) {
   }
   useEffect(() => {
     // calculate bot move and move it
-    console.log("USEEFFEFCT CALLLLLED");
     let squares = states[states.length-1];
     if (!turnX && settings && !calculateWinner(squares)) {
-      console.log(states);
       let hard = calComputerMoveHard(squares,turnX);
       const computerMove = (settings == 1) ? calComputerMoveEasy(squares,turnX) : hard[0];
       console.log("Computer move:", hard,computerMove);
@@ -38,6 +36,7 @@ export default function Board({settings}) {
       setTurnX(!turnX);
     }
   },[turnX])
+
   function goBack(i){
     let newSquares = states.slice(0,i+1);
     setStates(newSquares);
@@ -103,12 +102,11 @@ function calComputerMoveEasy(squares,turnX) {
 }
 
 function calComputerMoveHard(squares,turnX) {
-  // DFS function that returns the ideal move for the computer
-  // assumes
-//   console.log(squares,turnX);
-  // if game is over just return no move to play and loosing [-1,-1]
-  if (calculateWinner(squares) !== "Draw" && calculateWinner(squares)){ // not draw and not null
-    return [-1,-1];
+  // DFS function that returns the ideal move for the computer as [index of the move, lose|draw|win]
+  // if game is over just return -1 representing no move and loosing(-1) or draw(0)
+  if (calculateWinner(squares)){ //  not null
+    let isDraw = calculateWinner(squares) === "Draw";
+    return [-1,isDraw ? 0 : -1]; // draw or loose
   }
   // indexes that draw or loose
   let draw = -1;
@@ -117,7 +115,6 @@ function calComputerMoveHard(squares,turnX) {
     if (!squares[i]) {
       let res = calComputerMoveHard(squares.map((v, j) => j === i ? (turnX ? "X" : "O") : v), !turnX);
       // if there is winning index play it directly
-      
       if (res[1] === -1) {
         return [i, 1];
       }else if (res[1] === 0){
@@ -131,8 +128,6 @@ function calComputerMoveHard(squares,turnX) {
   if (draw !== -1){
     return [draw,0];
   }
-  if (loose !== -1){
-    return [loose,-1];
-  }
-  return [-1,0];
+  // if no draw lose is certain
+  return [loose,-1];
 }
